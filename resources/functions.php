@@ -44,12 +44,49 @@ function get_products() {
 	confirm($query);
 	while ($row = fetch_array($query)) {
 		echo $row['product_price'];
+// =========================================
+// Herodoc - allows big string of text with " " and ' '
+// has to be to the far left of editor for some reason...
+// |----------------------------------------
+$product = <<<DELIMETER
+		<div class="col-sm-4 col-lg-4 col-md-4">
+		    <div class="thumbnail">
+		    	<a href="item.php?id={$row['product_id']}">
+		        	<img src="{$row['product_image']}" alt="">
+		        </a>
+		        <div class="caption">
+		            <h4 class="pull-right">&#36;{$row['product_price']}</h4>
+		            <h4><a href="product.html">{$row['product_title']}</a>
+		            </h4>
+		            <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+		            <a class="btn btn-primary" target="_blank" href="item.php?id={$row['product_id']}">Add to cart</a>
+		        </div>
+		    </div>
+		</div>
+DELIMETER;
+
+echo $product;
+	} // end of while loop
+} // end of get_products()
+// =========================================
+// GET CATEGORIES Function
+// |----------------------------------------
+function get_categories() {
+	$query = query("SELECT * FROM categories");
+	confirm($query);
+
+	while ($row = fetch_array($query)) {
+		$category_links = <<<DELIMETER
+		<a href='category.php?id={$row['cat_id']}' class='list-group-item'>{$row['cat_title']}</a>
+DELIMETER;
+
+echo $category_links;
+		
 	}
 }
-
-
-
-
+// =========================================
+// LETS GET OUR CATEGORIES
+// |----------------------------------------
 
 
 ?>

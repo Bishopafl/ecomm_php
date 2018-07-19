@@ -32,13 +32,20 @@ function escape_string($string) {
 // =========================================
 // mysqli fetch array 
 // |----------------------------------------
-function fetch_array() {
+function fetch_array($result) {
 	return mysqli_fetch_array($result);
 }
 // =========================================
-// 
+// LETS GET OUR PRODUCTS
 // |----------------------------------------
-
+function get_products() {
+	$query = query(" SELECT * FROM products");
+	// makes sure the query is good
+	confirm($query);
+	while ($row = fetch_array($query)) {
+		echo $row['product_price'];
+	}
+}
 
 
 

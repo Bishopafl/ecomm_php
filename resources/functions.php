@@ -88,6 +88,33 @@ echo $category_links;
 // =========================================
 // LETS GET OUR CATEGORIES
 // |----------------------------------------
+function get_products_in_cat_page() {
+	$query = query(" SELECT * FROM products WHERE product_category_id =" . escape_string($_GET['id']). " ");
+	// makes sure the query is good
+	confirm($query);
+	while ($row = fetch_array($query)) {
+		echo $row['product_price'];
+// =========================================
+// Herodoc - allows big string of text with " " and ' '
+// has to be to the far left of editor for some reason...
+// |----------------------------------------
+$product = <<<DELIMETER
+		<div class="col-md-3 col-sm-6 hero-feature">
+            <div class="thumbnail">
+                <img src="{$row['product_image']}" alt="">
+                <div class="caption">
+                    <h3>{$row['product_title']}</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p>
+                        <a href="#" class="btn btn-primary">Buy Now!</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default">More Info</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+DELIMETER;
 
+echo $product;
+	} // end of while loop
+} // end of get_products()
 
 ?>

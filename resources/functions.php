@@ -3,6 +3,23 @@
 // Helper functions for our ecomm site
 // =========================================
 // |----------------------------------------
+// sets a message for user login
+function set_message($msg) {
+	if (!empty($msg)) {
+		$_SESSION['message'] = $msg;
+	} else {
+		$msg = "";
+	}
+}
+// |----------------------------------------
+// display message function
+function display_message() {
+	if (isset($_SESSION['message'])) {
+		echo $_SESSION['message'];
+		unset($_SESSION['message']);
+	}
+}
+// |----------------------------------------
 // redirect functionality when we need it
 function redirect($location) {
 	header("location: $location ");
@@ -116,5 +133,62 @@ DELIMETER;
 echo $product;
 	} // end of while loop
 } // end of get_products()
+
+
+// =========================================
+// LETS GET OUR PRODUCTS IN SHOP PAGE
+// |----------------------------------------
+function get_products_in_shop_page() {
+	$query = query(" SELECT * FROM products");
+	// makes sure the query is good
+	confirm($query);
+	while ($row = fetch_array($query)) {
+		// echo $row['product_price'];
+// =========================================
+// Herodoc - allows big string of text with " " and ' '
+// has to be to the far left of editor for some reason...
+// |----------------------------------------
+$product = <<<DELIMETER
+		<div class="col-md-3 col-sm-6 hero-feature">
+            <div class="thumbnail">
+                <img src="{$row['product_image']}" alt="">
+                <div class="caption">
+                    <h3>{$row['product_title']}</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                    <p>
+                        <a href="#" class="btn btn-primary">Buy Now!</a> <a href="item.php?id={$row['product_id']}" class="btn btn-default">More Info</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+DELIMETER;
+
+echo $product;
+	} // end of while loop
+} // end of get_products()
+// =========================================
+// LOGIN FUNCTIONALITY
+// |----------------------------------------
+function login_user() {
+	if (isset($_POST['submit'])) {
+		$username = escape_string($_POST['username']);
+		$password = escape_string($_POST['password']);
+
+		$query = query("SELECT * FROM users WHERE username = '{$username}' AND password = '{$password}' ");
+		confirm($query);
+		// returns count of rows
+		if (mysqli_num_rows($query) == 0) {
+			set_message("Your Password or Username are incorrect");
+			redirect("login.php");
+		} else {
+			// set_message("Welcome to Admin {$username}");
+			redirect("admin");
+		}
+	}
+
+}
+
+
+
 
 ?>

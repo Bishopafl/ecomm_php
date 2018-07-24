@@ -13,10 +13,10 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li>
-                <a href="#">Shop</a>
+                <a href="shop.php">Shop</a>
             </li>
             <li>
-                <a href="#">Login</a>
+                <a href="login.php">Login</a>
             </li>
             <li>
                 <a href="admin">Admin</a>

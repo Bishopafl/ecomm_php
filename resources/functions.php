@@ -193,7 +193,27 @@ function login_user() {
 
 function send_message() {
 		if (isset($_POST['submit'])) {
-			echo "it works";
+
+			$to 		= "someEmailAddress@gmail.com";
+			$from_name 	= isset($_POST['name']) ? $_POST['name'] : '';
+			$subject 	= isset($_POST['subject']) ? $_POST['subject'] : '';
+			$email 		= isset($_POST['email']) ? $_POST['email'] : '';
+			$message 	= isset($_POST['nessage']) ? $_POST['nessage'] : '';
+
+
+			$headers = "From: {$from_name} {$email}";
+			// mail function is not really relable, 
+			// email usually goes to junk mail...
+			// devs usually use 3rd party mail functions
+			$result = mail($to, $subject, $message, $headers);
+
+			if (!$result) {
+				redirect("contact.php");
+				set_message("Sorry we could not send your message");
+			} else {
+				set_message("Your Message has been sent");
+				redirect("contact.php");
+			}
 		}
 }
 

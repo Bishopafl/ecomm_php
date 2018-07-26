@@ -187,8 +187,14 @@ function login_user() {
 	}
 
 }
+// =========================================
+// SEND MESSAGE
+// |----------------------------------------
 
-
-
+function send_message() {
+		if (isset($_POST['submit'])) {
+			echo "it works";
+		}
+}
 
 ?>

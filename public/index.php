@@ -1,4 +1,7 @@
-D
+<?php require_once("../resources/config.php"); ?>
+<!-- HEADER INCLUDES -->
+<?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
+<!-- HEADER INCLUDES -->
 <!-- Page Content -->
 <div class="container">
     <div class="row">

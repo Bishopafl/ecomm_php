@@ -1,8 +1,9 @@
 <?php
 // redirection helper 
 ob_start();
-// turns on the session in the browserob	
+// turns on the session in the browser
 session_start();
+// session_destroy();
 
 // Defines DS as the directory separator
 // |------------------------------------------

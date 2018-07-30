@@ -5,9 +5,11 @@
 <!-- HEADER INCLUDES -->
 <?php 
 
-if (isset($_SESSION['product_1'])) {
-    echo $_SESSION['product_1'];
-}
+// if (isset($_SESSION['product_1'] || $_SESSION['product_2'])) {
+    echo "<pre>";
+    print_r($_SESSION);
+    echo "</pre>";
+// }
 
 ?>
 
@@ -38,7 +40,12 @@ if (isset($_SESSION['product_1'])) {
             <table class="table table-bordered" cellspacing="0">
                 <tr class="cart-subtotal">
                     <th>Items:</th>
-                    <td><span class="amount">4</span></td>
+                    <td><span class="amount"><?php
+
+                        // $_SESSION['item_quantity'];
+                    echo isset($_SESSION['item_quantity']) ?  $_SESSION['item_quantity'] : $_SESSION['item_quantity'] = "0";
+
+                    ?></span></td>
                 </tr>
                 <tr class="shipping">
                     <th>Shipping and Handling</th>
@@ -46,7 +53,14 @@ if (isset($_SESSION['product_1'])) {
                 </tr>
                 <tr class="order-total">
                     <th>Order Total</th>
-                    <td><strong><span class="amount">$3444</span></strong> </td>
+                    <td><strong><span class="amount">&#36;<?php 
+
+                    echo isset($_SESSION['item_total']) ?  $_SESSION['item_total'] : $_SESSION['item_total'] = "0.00";
+
+
+
+
+                    ?></span></strong> </td>
                 </tr>
             </table>
         </div><!-- CART TOTALS-->

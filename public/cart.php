@@ -35,6 +35,8 @@ if (isset($_GET['remove'])) {
     $_SESSION['product_' . $_GET['remove']]--;
     // if they are removing an item we have zero so lets display a message to let the customer know
     if ($_SESSION['product_' . $_GET['remove']] < 1) {
+        unset($_SESSION['item_total']);
+        unset($_SESSION['item_quantity']);
         redirect("checkout.php");
     } else {
         redirect("checkout.php");
@@ -47,56 +49,65 @@ if (isset($_GET['delete'])) {
     // if deleting an item for shopping cart, remove completely
     $_SESSION['product_' . $_GET['delete']] = '0';
     // after removing item, redirect back to checkout.php
+    unset($_SESSION['item_total']);
+    unset($_SESSION['item_quantity']);
     redirect("checkout.php");
 }
 // ============================================================
 // function resposible displaying items to display in checkout.php
 // ------------------------------------------------------------
 function cart() {
-
+    $total = 0;
+    $item_quantity = 0;
     foreach ($_SESSION as $product => $value) {
-        echo "<pre>";
-        var_dump($product);
-        echo "</pre>";
-
         if ($value > 0 ) {
             if (substr($product, 0, 8) == "product_") {
-
-            $length = strlen($product - 8);
-            // id of session
-            $id = substr($product, 8, $length);
-
-            $query = query("SELECT * FROM products WHERE product_id = " . escape_string($id) . " ");
-            confirm($query);
-            // lets loop through the stuff to get the information from the db
-            while ($row = fetch_array($query)) {
-                // multiply price with value 
-                // of session products for subtotal
-                $sub = $row['product_price']*$value;
-                // display products using a delimeter        
-                $product = <<<DELIMETER
-                <tr>
-                    <td>{$row['product_title']}</td>
-                    <td>&#36;{$row['product_price']}</td>
-                    <td>{$value}</td>
-                    <td>&#36;{$sub}</td>  
-                    <td>
-                        <a class='btn btn-warning' href="cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>
-                        <a class="btn btn-success" href='cart.php?add={$row['product_id']}'><span class='glyphicon glyphicon-plus'></span></a>
-                        <a class="btn btn-danger" href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a>
-                    </td>
-                    <td></td>
-                </tr>
+                $length = strlen($product - 8);
+                // retrieves id for product in user session
+                $id = substr($product, 8, $length);
+                // queries db for products in $id variable
+                $query = query("SELECT * FROM products WHERE product_id = " . escape_string($id) . " ");
+                // confirm the query using helper function
+                confirm($query);
+                // lets loop through the stuff to get the information from the db
+                while ($row = fetch_array($query)) {
+                    // multiply price with value 
+                    // of session products for subtotal
+                    $sub = $row['product_price']*$value;
+                    $item_quantity += $value;
+                    // echo $item_quantity;
+                    // display products using a delimeter        
+                    $product = <<<DELIMETER
+                    <tr>
+                        <td>{$row['product_title']}</td>
+                        <td>&#36;{$row['product_price']}</td>
+                        <td>{$value}</td>
+                        <td>&#36;{$sub}</td>  
+                        <td>
+                            <a class='btn btn-warning' href="cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>
+                            <a class="btn btn-success" href='cart.php?add={$row['product_id']}'><span class='glyphicon glyphicon-plus'></span></a>
+                            <a class="btn btn-danger" href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a>
+                        </td>
+                        <td></td>
+                    </tr>
 DELIMETER;
             // echo the product variable
             echo $product;
-            } // end of while
-        } // end of if
-        }
-    } // end of foreach
+            } // end of while($row)
+            // ================================
+            // creating the total & quantity
+            // to create display the total!
+            // ================================
+            // Lets set the session variables to use
+            // information from this page on the checkout.php
+            $_SESSION['item_total'] = $total += $sub;
+            $_SESSION['item_quantity'] = $item_quantity;
+            } // end of if(substr)
+        } // end of if($value)
+    } // end of foreach($_SESION)
 } // end of cart()
 // ============================================================
-// function resposible displaying items to display in checkout.php
+// 
 // ------------------------------------------------------------
 
 

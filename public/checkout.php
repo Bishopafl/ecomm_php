@@ -41,10 +41,8 @@
                 <tr class="cart-subtotal">
                     <th>Items:</th>
                     <td><span class="amount"><?php
-
-                        // $_SESSION['item_quantity'];
-                    echo isset($_SESSION['item_quantity']) ?  $_SESSION['item_quantity'] : $_SESSION['item_quantity'] = "0";
-
+                        // pulling the $_SESSION['item_quantity'] from cart.php in the cart()
+                        echo isset($_SESSION['item_quantity']) ?  $_SESSION['item_quantity'] : $_SESSION['item_quantity'] = "0";
                     ?></span></td>
                 </tr>
                 <tr class="shipping">
@@ -54,13 +52,9 @@
                 <tr class="order-total">
                     <th>Order Total</th>
                     <td><strong><span class="amount">&#36;<?php 
-
-                    echo isset($_SESSION['item_total']) ?  $_SESSION['item_total'] : $_SESSION['item_total'] = "0.00";
-
-
-
-
-                    ?></span></strong> </td>
+                        // pulls the SESSION['item_total'] from cart.php in the cart()
+                        echo isset($_SESSION['item_total']) ?  $_SESSION['item_total'] : $_SESSION['item_total'] = "0.00";
+                    ?></span></strong></td>
                 </tr>
             </table>
         </div><!-- CART TOTALS-->

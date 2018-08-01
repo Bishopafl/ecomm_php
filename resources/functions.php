@@ -1,9 +1,9 @@
 <?php 
-
+// =========================================
 // Helper functions for our ecomm site
 // =========================================
-// |----------------------------------------
 // sets a message for user login
+// |----------------------------------------
 function set_message($msg) {
 	if (!empty($msg)) {
 		$_SESSION['message'] = $msg;
@@ -11,16 +11,18 @@ function set_message($msg) {
 		$msg = "";
 	}
 }
-// |----------------------------------------
+// =========================================
 // display message function
+// |----------------------------------------
 function display_message() {
 	if (isset($_SESSION['message'])) {
 		echo $_SESSION['message'];
 		unset($_SESSION['message']);
 	}
 }
-// |----------------------------------------
+// =========================================
 // redirect functionality when we need it
+// |----------------------------------------
 function redirect($location) {
 	header("location: $location ");
 }
@@ -52,6 +54,9 @@ function escape_string($string) {
 function fetch_array($result) {
 	return mysqli_fetch_array($result);
 }
+// =========================================
+// End of helper functions
+// =========================================
 // ================================ FRONT END FUNCTIONS ====================================
 // LETS GET OUR PRODUCTS
 // |----------------------------------------
@@ -61,8 +66,11 @@ function get_products() {
 	confirm($query);
 	while ($row = fetch_array($query)) {
 // =========================================
-// Herodoc - allows big string of text with " " and ' '
-// has to be to the far left of editor for some reason...
+// Herodoc - allows big string of html text with " " and ' '
+// Also allows for php to be inserted with curly brackets - don't forget the $
+// Needs in all caps <<<DELIMETER to instatate
+// end with DELIMETER in all caps
+// Has to be to the far left of editor for some reason...
 // |----------------------------------------
 $product = <<<DELIMETER
 		<div class="col-sm-4 col-lg-4 col-md-4">
@@ -95,11 +103,9 @@ function get_categories() {
 		$category_links = <<<DELIMETER
 		<a href='category.php?id={$row['cat_id']}' class='list-group-item'>{$row['cat_title']}</a>
 DELIMETER;
-
-echo $category_links;
-		
-	}
-}
+		echo $category_links;
+	} // end of while
+} // end of get_categories
 // ================================ BACK END FUNCTIONS ====================================
 // =========================================
 // LETS GET OUR CATEGORIES
@@ -132,8 +138,6 @@ DELIMETER;
 echo $product;
 	} // end of while loop
 } // end of get_products()
-
-
 // =========================================
 // LETS GET OUR PRODUCTS IN SHOP PAGE
 // |----------------------------------------
@@ -184,36 +188,32 @@ function login_user() {
 			redirect("admin");
 		}
 	}
-
 }
 // =========================================
-// SEND MESSAGE
+// SEND MESSAGE FUNCTION
 // |----------------------------------------
-
 function send_message() {
-		if (isset($_POST['submit'])) {
+	if (isset($_POST['submit'])) {
+		$to 		= "someEmailAddress@gmail.com";
+		$from_name 	= isset($_POST['name']) ? $_POST['name'] : '';
+		$subject 	= isset($_POST['subject']) ? $_POST['subject'] : '';
+		$email 		= isset($_POST['email']) ? $_POST['email'] : '';
+		$message 	= isset($_POST['nessage']) ? $_POST['nessage'] : '';
 
-			$to 		= "someEmailAddress@gmail.com";
-			$from_name 	= isset($_POST['name']) ? $_POST['name'] : '';
-			$subject 	= isset($_POST['subject']) ? $_POST['subject'] : '';
-			$email 		= isset($_POST['email']) ? $_POST['email'] : '';
-			$message 	= isset($_POST['nessage']) ? $_POST['nessage'] : '';
+		$headers = "From: {$from_name} {$email}";
+		// mail function is not really relable, 
+		// email usually goes to junk mail...
+		// devs usually use 3rd party mail functions
+		$result = mail($to, $subject, $message, $headers);
 
-
-			$headers = "From: {$from_name} {$email}";
-			// mail function is not really relable, 
-			// email usually goes to junk mail...
-			// devs usually use 3rd party mail functions
-			$result = mail($to, $subject, $message, $headers);
-
-			if (!$result) {
-				redirect("contact.php");
-				set_message("Sorry we could not send your message");
-			} else {
-				set_message("Your Message has been sent");
-				redirect("contact.php");
-			}
+		if (!$result) {
+			redirect("contact.php");
+			set_message("Sorry we could not send your message");
+		} else {
+			set_message("Your Message has been sent");
+			redirect("contact.php");
 		}
+	}
 }
 
 ?>

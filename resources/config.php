@@ -4,13 +4,12 @@ ob_start();
 // turns on the session in the browser
 session_start();
 // session_destroy();
-
+// |========================================
 // Defines DS as the directory separator
 // |------------------------------------------
 defined("DS") ? null : define("DS", DIRECTORY_SEPARATOR);
-
 // |========================================
-// magic constants
+// examples of magic constants
 // |------------------------------------------
 // displays current directory
 // echo __DIR__;

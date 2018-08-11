@@ -124,7 +124,7 @@ DELIMETER;
 // display the paypal button when there is a quantity in the cart
 // ------------------------------------------------------------
 function show_paypal() {
-    if (isset($_SESSION['item_quantity'])) {
+    if (isset($_SESSION['item_quantity']) && $_SESSION['item_quantity'] >= 1) {
 
     $paypal_button = <<<DELIMETER
     <input type="image" name="upload" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">

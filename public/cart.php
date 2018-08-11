@@ -59,6 +59,11 @@ if (isset($_GET['delete'])) {
 function cart() {
     $total = 0;
     $item_quantity = 0;
+    $item_name = 1; //default item name number and amount to 1, then make a loop to increment
+    $item_number = 1;
+    $amount = 1;
+    $quantity = 1;
+
     foreach ($_SESSION as $product => $value) {
         if ($value > 0 ) {
             if (substr($product, 0, 8) == "product_") {
@@ -90,9 +95,18 @@ function cart() {
                         </td>
                         <td></td>
                     </tr>
+                    <input type="hidden" name="item_name_{$item_name}" value="hat">
+                    <input type="hidden" name="item_number_{$item_number}" value="123">
+                    <input type="hidden" name="amount_{$amount}" value="15.00">
+                    <input type="hidden" name="quantity_{$quantity}" value="15.00">
 DELIMETER;
             // echo the product variable
             echo $product;
+            // increment the item name, number and amount in the cart!
+            $item_name++;
+            $item_number++;
+            $amount++;
+            $quantity++;
             } // end of while($row)
             // ================================
             // creating the total & quantity

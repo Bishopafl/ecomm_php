@@ -95,10 +95,10 @@ function cart() {
                         </td>
                         <td></td>
                     </tr>
-                    <input type="hidden" name="item_name_{$item_name}" value="hat">
-                    <input type="hidden" name="item_number_{$item_number}" value="123">
-                    <input type="hidden" name="amount_{$amount}" value="15.00">
-                    <input type="hidden" name="quantity_{$quantity}" value="15.00">
+                    <input type="hidden" name="item_name_{$item_name}" value="{$row['product_title']}">
+                    <input type="hidden" name="item_number_{$item_number}" value="{$row['product_id']}">
+                    <input type="hidden" name="amount_{$amount}" value="{$row['product_price']}">
+                    <input type="hidden" name="quantity_{$quantity}" value="{$value}">
 DELIMETER;
             // echo the product variable
             echo $product;
@@ -121,9 +121,17 @@ DELIMETER;
     } // end of foreach($_SESION)
 } // end of cart()
 // ============================================================
-// 
+// display the paypal button when there is a quantity in the cart
 // ------------------------------------------------------------
+function show_paypal() {
+    if (isset($_SESSION['item_quantity'])) {
 
+    $paypal_button = <<<DELIMETER
+    <input type="image" name="upload" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+DELIMETER;
+    return $paypal_button;
+    }
+}
 
 
 ?>

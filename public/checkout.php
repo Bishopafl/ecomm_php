@@ -18,10 +18,13 @@
     <!-- /.row --> 
     <div class="row">
         <h4 class="text-center bg-danger"><?php display_message(); ?></h4>
+        <!-- CHECKOUT FORM -->
+        <!-- CHECKOUT FORM -->
         <h1>Checkout</h1>
-            <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-              <input type="hidden" name="cmd" value="_cart">
-              <input type="hidden" name="business" value="business@adamlopez.co">
+        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+            <input type="hidden" name="cmd" value="_cart">
+            <input type="hidden" name="business" value="business@adamlopez.co">
+            <input type="hidden" name="currency_code" value="USD">
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -35,8 +38,11 @@
                     <?php cart(); ?>
                 </tbody>
             </table>
-            <input type="image" name="submit" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_LG.gif" alt="PayPal - The safer, easier way to pay online">
+            <?php echo show_paypal(); ?>
         </form>
+        <!-- CHECKOUT FORM -->
+        <!-- CHECKOUT FORM -->
+        <!--  ***********CART TOTALS*************-->
         <!--  ***********CART TOTALS*************-->
         <div class="col-xs-4 pull-right ">
             <h2>Cart Totals</h2>
@@ -60,9 +66,12 @@
                     ?></span></strong></td>
                 </tr>
             </table>
-        </div><!-- CART TOTALS-->
+        </div>
+        <!--  ***********CART TOTALS*************-->
+        <!--  ***********CART TOTALS*************-->
     </div><!--Row Content-->    
-</div><!--Main Content-->
+</div>
+<!-- Page Content -->
 <!-- INCLUDE FOOTER -->
 <?php include(TEMPLATE_FRONT.DS."footer.php"); ?>
 <!-- INCLUDE FOOTER -->

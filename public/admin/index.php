@@ -19,6 +19,17 @@
                     </div>
                 </div>
                 <!-- /.row -->
+                <?php 
+
+                    if ($_SERVER['REQUEST_URI'] == "/ecomm/public/admin/" || $_SERVER['REQUEST_URI'] == "/ecomm/public/admin/index.php") {
+                        include(TEMPLATE_BACK ."/admin-content.php");
+                    }
+
+                    echo $_SERVER['REQUEST_URI'];
+                    echo __DIR__;
+
+
+                ?>
             </div>
             <!-- /.container-fluid -->
         </div>

@@ -1,5 +1,4 @@
 <?php require_once("../resources/config.php"); ?>
-<?php require_once("cart.php"); ?>
 <!-- HEADER INCLUDES -->
 <?php include(TEMPLATE_FRONT . DS . "header.php"); ?>
 <!-- HEADER INCLUDES -->

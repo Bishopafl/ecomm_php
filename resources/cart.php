@@ -19,11 +19,11 @@ if (isset($_GET['add'])) {
         // is not equal, increment to the shopping cart
         if ($row['product_quantity'] != $_SESSION['product_' . $_GET['add']]) {
             $_SESSION['product_' . $_GET['add']] +=1;
-            redirect("checkout.php");
+            redirect("../public/checkout.php");
         } else {
             // or if they keep on adding and they don't have it in the db
             set_message("We only have " . $row['product_quantity'] . " of " . $row['product_title'] . " available.");
-            redirect("checkout.php");
+            redirect("../public/checkout.php");
         } 
     }
 }
@@ -37,9 +37,9 @@ if (isset($_GET['remove'])) {
     if ($_SESSION['product_' . $_GET['remove']] < 1) {
         unset($_SESSION['item_total']);
         unset($_SESSION['item_quantity']);
-        redirect("checkout.php");
+        redirect("../public/checkout.php");
     } else {
-        redirect("checkout.php");
+        redirect("../public/checkout.php");
     }
 }
 // ============================================================
@@ -48,10 +48,10 @@ if (isset($_GET['remove'])) {
 if (isset($_GET['delete'])) {
     // if deleting an item for shopping cart, remove completely
     $_SESSION['product_' . $_GET['delete']] = '0';
-    // after removing item, redirect back to checkout.php
+    // after removing item, redirect back to ../public/checkout.php
     unset($_SESSION['item_total']);
     unset($_SESSION['item_quantity']);
-    redirect("checkout.php");
+    redirect("../public/checkout.php");
 }
 // ============================================================
 // function resposible displaying items to display in checkout.php
@@ -89,9 +89,9 @@ function cart() {
                         <td>{$value}</td>
                         <td>&#36;{$sub}</td>  
                         <td>
-                            <a class='btn btn-warning' href="cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>
-                            <a class="btn btn-success" href='cart.php?add={$row['product_id']}'><span class='glyphicon glyphicon-plus'></span></a>
-                            <a class="btn btn-danger" href="cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a>
+                            <a class='btn btn-warning' href="../resources/cart.php?remove={$row['product_id']}"><span class='glyphicon glyphicon-minus'></span></a>
+                            <a class="btn btn-success" href='../resources/cart.php?add={$row['product_id']}'><span class='glyphicon glyphicon-plus'></span></a>
+                            <a class="btn btn-danger" href="../resources/cart.php?delete={$row['product_id']}"><span class='glyphicon glyphicon-remove'></span></a>
                         </td>
                         <td></td>
                     </tr>

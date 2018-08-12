@@ -37,6 +37,7 @@ $connection = mysqli_connect(DB_HOST,DB_USER,DB_PASS,DB_NAME);
 // |========================================
 // functions can be available anywhere with this requirement
 require_once("functions.php");
+require_once("cart.php");
 
 
 

@@ -1,4 +1,4 @@
-<?php require_once("../resources/config.php"); ?>
+<?php require_once("config.php"); ?>
 
 <?php 
 
@@ -132,6 +132,39 @@ DELIMETER;
     return $paypal_button;
     }
 }
+// ============================================================
+// Reports function - for returning data that was purchased
+// ------------------------------------------------------------
+function report() {
+    $total = 0;
+    $item_quantity = 0;
+    foreach ($_SESSION as $product => $value) {
+        if ($value > 0 ) {
+            if (substr($product, 0, 8) == "product_") {
+                $length = strlen($product - 8);
+                // retrieves id for product in user session
+                $id = substr($product, 8, $length);
+                // queries db for products in $id variable
+                $query = query("SELECT * FROM products WHERE product_id = " . escape_string($id) . " ");
+                // confirm the query using helper function
+                confirm($query);
+                // lets loop through the stuff to get the information from the db
+                while ($row = fetch_array($query)) {
+                    // multiply price with value 
+                    // of session products for subtotal
+                    $sub = $row['product_price']*$value;
+                    $item_quantity += $value;
+             
+                } // end of while($row)
+            // ================================
+            // 
+            // ================================
 
+            $total += $sub;
+            echo $item_quantity;
+            } // end of if(substr)
+        } // end of if($value)
+    } // end of foreach($_SESION)
+} // end of cart()
 
 ?>
